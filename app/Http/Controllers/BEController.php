@@ -116,7 +116,7 @@ class BEController extends Controller
      */
     public function profileSaveUpdate(Request $request)
     {
-         // dd($request);
+        // dd($request);
         if($request->utype !== 'admin'){
             if($request->rider_profile_avatar)
             {
@@ -129,7 +129,7 @@ class BEController extends Controller
                 $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
             }
         }
-// dd($request);
+        // dd($request);
         User::where('id', (int) $request->id)
             ->update([
                 'name' => $request->name,
