@@ -38,7 +38,7 @@
 		                                            <div class="col-md-10 mx-auto">
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
-		                                                        <label>Name</label>                   
+		                                                        <label>Name</label>
 		                                                        <div class="input-group mb-1">
 		                                                            <input type="text" class="form-control" name="name" placeholder="Name" required>
 		                                                        </div>
@@ -46,7 +46,7 @@
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
-		                                                        <label>Login Credentials</label>                   
+		                                                        <label>Login Credentials</label>
 		                                                        <div class="input-group mb-1">
 		                                                            <input type="text" class="form-control" name="email" placeholder="Email" required>
 		                                                            <input type="password" class="form-control" name="password" placeholder="Password" required>
@@ -69,10 +69,10 @@
 		                                                </div>
 		                                                <div class="form-group row">
 		                                                    <div class="col-lg-12 col-md-12">
-		                                                        <label>Home Address</label>                                
+		                                                        <label>Home Address</label>
 		                                                        <div class="input-group mb-1">
 		                                                            <textarea class="form-control" name="rider_profile_address" required></textarea>
-		                                                        </div>               
+		                                                        </div>
 		                                                    </div>
 		                                                </div>
 		                                                <div class="form-group row">
@@ -129,15 +129,15 @@
 
                                     @foreach($riders as $k => $r)
 		                                <tr class="{{ ($k % 2 === 0)? 'even':'odd' }}">
-		                                	<td>		
-		                                		<a href="/profile?ref_id={{$r->id}}">                              		
-		                                    	<figure class="avatar avatar-90 rounded-circle mx-auto my-3"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure></a>  
+		                                	<td>
+		                                		<a href="/profile?ref_id={{$r->id}}">
+		                                    	<figure class="avatar avatar-90 rounded-circle mx-auto my-3"><img src="/storage/images/users/{{ $r->rider_profile_avatar }}" alt=""></figure></a>
 		                                	</td>
 		                                    <td>
 		                                    	{{ $r->name }}
 		                                    </td>
 		                                    <td>
-		                                    	@if($r->status === 'active')
+		                                    	@if($r->rider_status_status === 'active')
 		                                    	<span class="badge badge-success">Active</span>
 		                                    	@else
 		                                    	<span class="badge badge-danger">Not Active</span>
@@ -146,22 +146,22 @@
 		                                    <td>
 		                                        <p class="mb-0">{{ $r->rider_contact_number }}</p>
 		                                        <p class="mb-0"><small>{{ $r->rider_profile_zip_code }} : {{ $r->rider_profile_address }}</small></p>
-		                                    </td>     
+		                                    </td>
 		                                    <td>
 		                                        <p class="mb-0">
 		                                        	Plate #: {{ $r->rider_profile_vehicle_number }}</p>
 		                                        {{--
 		                                        	<p class="mb-0">
-		                                        	License:<br>                   		
+		                                        	License:<br>
 		                                    		<figure class="avatar avatar-100 vm"><img src="/storage/images/users/license/{{ $r->rider_profile_drivers_license }}" alt=""></figure>
 		                                        </p>
 		                                        --}}
-		                                    </td>   
+		                                    </td>
 	                                    	<td>
-	                                        	<p class="mb-0">           		
+	                                        	<p class="mb-0">
 	                                    		<figure class="avatar avatar-100 vm"><img src="/storage/images/users/license/{{ $r->rider_profile_drivers_license }}" alt=""></figure>
 		                                        </p>
-		                                    </td>                 
+		                                    </td>
 		                                </tr>
                                     @endforeach
 	                            </tbody>
@@ -185,7 +185,7 @@
     <!-- datepicker jquery file -->
     <script src="/assets/be/vendor/bootstrap-daterangepicker-master/moment.js"></script>
     <script src="/assets/be/vendor/bootstrap-daterangepicker-master/daterangepicker.js"></script>
-    
+
     <!-- Dropzone jquery file -->
     <script src="/assets/be/vendor/dropzone-master/dropzone.js"></script>
 
@@ -198,7 +198,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });   
+            });
 
             /* data Table */
             $('#dataTables-example').DataTable({
@@ -215,7 +215,7 @@
                     "position": "center"
                 }
             });
-            
+
             $("#avatarUpload, #dlUpload").dropzone({
                 url: "../",
                 acceptedFiles: "image/*",
@@ -227,6 +227,6 @@
                 showDropdowns: true,
                 minYear: 1901
             }, function(start, end, label) {});
-        });   
+        });
 	</script>
 @endpush

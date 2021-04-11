@@ -120,12 +120,12 @@ class BEController extends Controller
         if($request->utype !== 'admin'){
             if($request->rider_profile_avatar)
             {
-                $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
+                $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension();
                 $request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
             }
             if($request->rider_profile_drivers_license)
             {
-                $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
+                $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension();
                 $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
             }
         }
@@ -197,7 +197,7 @@ class BEController extends Controller
         }
 
         return redirect('/profile');
-        
+
     }
 
     /**
@@ -222,7 +222,7 @@ class BEController extends Controller
 
         $riders = DB::table('users')
             ->where('utype',  'rider')
-            ->where('status',  'active')
+            // ->where('status',  'active')
             ->join('rider_status', 'rider_status.rider_status_rider_id', '=', 'users.id')
             ->join('rider_profile', 'rider_profile.rider_profile_rider_id', '=', 'users.id')
             ->join('rider_contact', 'rider_contact.rider_contact_rider_id', '=', 'users.id')
@@ -426,10 +426,10 @@ class BEController extends Controller
     public function riderAdd(Request $request)
     {
         // dd($request);
-        $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension(); 
+        $rider_profile_avatar = md5(time()).'.'. md5($request->rider_profile_avatar->getClientOriginalName()).'.'.$request->rider_profile_avatar->getClientOriginalExtension();
         $request->rider_profile_avatar->storeAs('public/images/users', $rider_profile_avatar);
 
-        $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension(); 
+        $rider_profile_drivers_license = md5(time()).'.'. md5($request->rider_profile_drivers_license->getClientOriginalName()).'.'.$request->rider_profile_drivers_license->getClientOriginalExtension();
         $request->rider_profile_drivers_license->storeAs('public/images/users/license', $rider_profile_drivers_license);
         // dd($request);
 
@@ -445,7 +445,7 @@ class BEController extends Controller
         $u->utype = 'rider';
         $u->password = Hash::make($request->password);
         $u->save();
-        
+
         $_lid = $u->id;
 
         $rs = new RiderStatus;
@@ -555,7 +555,7 @@ class BEController extends Controller
 
             $_addons = DB::table('addons')
                 ->where('addmenuid', $v->menuid)
-                ->get();        
+                ->get();
 
             if(isset($v->maddons))
             {
@@ -572,7 +572,7 @@ class BEController extends Controller
                 }
                 $menu[$k]->addon_menu = collect($_am);
             }
-                
+
             $_mt = explode(',', str_replace(array('[',']'), '', $v->mtype));
 
             $menu[$k]->vendor = $_vendor;
@@ -609,7 +609,7 @@ class BEController extends Controller
         }
 
         // dd($addons);
-        $_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
+        $_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension();
         $request->mavatar->storeAs('public/images', $_mavatar);
         // dd($request);
 
@@ -635,7 +635,7 @@ class BEController extends Controller
         $m->mavatar = $_mavatar;
         $m->save();
         $_lid = $m->id;
-        
+
         return redirect('/product-list');
     }
 
@@ -730,7 +730,7 @@ class BEController extends Controller
         $type = '[' . implode(',', $request->mtype) . ']';
         if($request->mavatar)
         {
-            $_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension(); 
+            $_mavatar = md5($request->vendorid).'.'. md5($request->mavatar->getClientOriginalName()).'.'.$request->mavatar->getClientOriginalExtension();
             $request->mavatar->storeAs('public/images', $_mavatar);
         }
 
@@ -812,7 +812,7 @@ class BEController extends Controller
 
         return redirect('/store-list');
     }
-    
+
     public function storeUpdate($id)
     {
         $store = DB::table('vendors')
@@ -946,7 +946,7 @@ class BEController extends Controller
             ->where('rider_status.rider_status_status', '!=', 'not_active')
             ->select('users.*', 'rider_status.rider_status_status', 'rider_status.rider_status_id', 'rider_profile.rider_profile_address', 'rider_contact.rider_contact_type', 'rider_contact.rider_contact_number')
             ->get();
-            
+
         return response()->json([
             'riders'=>$riders
         ]);
@@ -972,7 +972,7 @@ class BEController extends Controller
             ->where('rider_status.rider_status_status', '=', 'waiting')
             ->select('users.*', 'rider_status.rider_status_status', 'rider_status.rider_status_id', 'rider_profile.rider_profile_address', 'rider_profile.rider_profile_zip_code', 'rider_contact.rider_contact_type', 'rider_contact.rider_contact_number')
             ->get();
-            
+
         return response()->json(
             $riders
         );
@@ -990,7 +990,7 @@ class BEController extends Controller
             ->update([
                 'rider_status_status' => $request->get('status')
             ]);
-            
+
         return response()->json([
             'status'=> $status
         ]);
@@ -1009,7 +1009,7 @@ class BEController extends Controller
                 'order_trackstatus' => $request->get('status'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
-            
+
         return response()->json([
             'status'=> $request->all()
         ]);
@@ -1028,7 +1028,7 @@ class BEController extends Controller
                 'order_trackstatus' => 'processing',
                 'order_track_riderid' => $request->get('rider')
             ]);
-            
+
         return response()->json([
             'status'=> $status
         ]);
